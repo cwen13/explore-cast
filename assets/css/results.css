@@ -1,0 +1,44 @@
+
+
+* {
+  
+}
+
+main {
+  padding: 10rem 0rem 0rem 0rem;
+}
+
+
+#tagline {
+  background-color: yellow;
+}
+
+#weather-panel {
+  position: fixed;
+  padding: 4rem 0rem;
+  width: 100%;
+}
+
+#tagline {
+  margin: 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 2rem;
+}
+
+
+
+.side-bar {
+  height: 100%;
+  width: 15rem;
+  position: fixed;
+  z-index: 1;
+  background-color: purple;
+  overflow-x: hidden;
+  
+}
+
+.results {
+  margin: 1rem 1rem 1rem 15.25rem;
+}
