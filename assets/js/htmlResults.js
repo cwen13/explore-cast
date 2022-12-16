@@ -3,11 +3,26 @@
  * are created in the same way and no default tile is used
  */
 
-let eR = {"title": "Big concert",
+let eR = [{"title": "Big concert",
 	  "date": "2022-03-12",
 	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
 	  "sourec": "My head",
-	  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",}
+	   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",},
+	  {"title": "Big concert",
+	  "date": "2022-03-12",
+	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
+	  "sourec": "My head",
+	   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",},
+	  {"title": "Big concert",
+	  "date": "2022-03-12",
+	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
+	  "sourec": "My head",
+	   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",},
+	  {"title": "Big concert",
+	  "date": "2022-03-12",
+	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
+	  "sourec": "My head",
+	  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",}]
 
 function buildTile (eventResults) {
   // Need to make componets
@@ -21,6 +36,7 @@ function buildTile (eventResults) {
   // -Source of event
 
   // build shell
+  let resultList = document.querySelector(".results");
   let container = document.createElement("section");
   container.setAttribute("class", "box results");
   let resultTile = document.createElement("article");
@@ -46,32 +62,29 @@ function buildTile (eventResults) {
   titleSectionEl.setAttribute("class", "content columns");
   let middleSection = document.createElement("section");
   middleSection.setAttribute("class", "media-content");
-  
   let eDescEl = document.createElement("section");
   eDescEl.setAttribute("class" , "column is-four-fifths");
   eDescEl.textContent = eventResults["description"];
-    
   let eSourceEl = document.createElement("a");
   eSourceEl.textContent = eventResults["source"];
 
   // build tile
   figureEl.appendChild(ePicEl);
   picSectionEl.appendChild(figureEl);
-
   eTitleEl.appendChild(dateEl);
   eTitleEl.insertBefore(breakEl, dateEl);
   eTitleEl.insertBefore(titleEl, breakEl);
   titleSectionEl.appendChild(eTitleEl);
   titleSectionEl.appendChild(eDescEl);
-
   middleSection.appendChild(titleSectionEl);
-  
   resultTile.appendChild(middleSection);
   resultTile.insertBefore(picSectionEl, middleSection);
-
-  let resultList = document.querySelector(".results");
   resultList.appendChild(resultTile);
 
+  return 0;
 }
 
-buildTile(eR);
+for (let i=0; i<eR.length;i++){
+  buildTile(eR[0]);
+}
+
