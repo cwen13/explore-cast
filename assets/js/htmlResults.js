@@ -5,7 +5,7 @@
 
 let eR = {"title": "Big concert",
 	  "date": "2022-03-12",
-	  "pic": "./../images/wireframe-mockup.png",
+	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
 	  "sourec": "My head",
 	  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",}
 
@@ -28,7 +28,7 @@ function buildTile (eventResults) {
 
   // build picture elements
   let ePicEl = document.createElement("img");
-  ePicEl.setAttribute("src", eventResults["picture"]);
+  ePicEl.setAttribute("src", eventResults["pic"]);
   let figureEl = document.createElement("figure");
   figureEl.setAttribute("class", "image is-64x64")
   let picSectionEl = document.createElement("section");
@@ -36,8 +36,11 @@ function buildTile (eventResults) {
 
   // build title and datetime items
   let eTitleEl = document.createElement("section");
+  let dateEl = document.createElement("div");
+  dateEl.textContent=eventResults["date"]
+  let breakEl = document.createElement("br");
   let titleEl = document.createElement("strong")
-  titleEl.textContent = eventResults["title"] + "<br></br>" + eventResults["date"]
+  titleEl.textContent = eventResults["title"];
   eTitleEl.setAttribute("class", "colulmn is-fifth");
   let titleSectionEl = document.createElement("section");
   titleSectionEl.setAttribute("class", "content columns");
@@ -55,7 +58,9 @@ function buildTile (eventResults) {
   figureEl.appendChild(ePicEl);
   picSectionEl.appendChild(figureEl);
 
-  eTitleEl.appendChild(titleEl);
+  eTitleEl.appendChild(dateEl);
+  eTitleEl.insertBefore(breakEl, dateEl);
+  eTitleEl.insertBefore(titleEl, breakEl);
   titleSectionEl.appendChild(eTitleEl);
   titleSectionEl.appendChild(eDescEl);
 
