@@ -16,20 +16,42 @@
     <header>
     </header>
     <!--hows main card with search form -->
-    <main>
-      <section class="name isvcentered">
-	<h1>Explore-cast</h1>
+    <main class="coulmns box">
+      <section class="name column container is-full ">
+	<h1 class="title is-justify-content-center">Explore-cast</h1>
+	<h2 class="subtitle">The Place to find the Thing</h2>
       </section>
-      <section class="title-block is-two-thirds">
-	<form>
-	  <input class="location">
-	  </input>
-	  <section class="datepicker">
-	  </section>
-	  <button class="submit button is-primary">
-	    Search for events...
-	  </button>	
-	</form>
+      <section class="title-block is-two-thirds container">
+
+	<form class="box is-full container">
+	  <div class="field">
+	    <label class="label">City</label>
+	    <div class="control">
+	      <input class="input" name="city" id="city" type="text" placeholder="Your dreams"/>
+	    </div>
+	  </div>
+	  <div class="field">
+	    <label class="label">State</label>
+	    <div class="control">
+	      <input class="input" name="state" id="state" type="text" placeholder="Your imgination"/>
+	    </div>
+	  </div>
+
+	  <div class="field">
+	    <label class="label">Start date</label>
+	    <div class="control">
+	      <input id="startDate" class="input" type="date"/>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <label class="label">End date</label>
+	    <div class="control">
+	      <input id="endDate" class="input" type="date"/>
+	      </div>
+	    </div>
+
+	    <button class="submit button is-primary">Search for events..</button>
+	  </form>
       </section>
     </main>
     <footer>

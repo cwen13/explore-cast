@@ -8,9 +8,8 @@
     <!-- Changed title -->
     <title>Results</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"/>
-     
       <!-- Imported our own custom stylesheet -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/results.css" />
   </head>
   <body>
     <!-- Header that shows the weather -->
@@ -22,11 +21,114 @@
       </section>
     </header>
     <!-- Nav ar on the side showing entries for location, dates, submit button-->
-    <nav>
+    <nav class="has-navbar-fixed-top">
+      <section id="tagline" class="is-full" >
+	The Perfect Place to find The Perfect Thing.
+      </section>
+      <section id="weather-panel" class="columns">
+	<section id="day0" class="column box is-primary" >
+	  <ul>
+	    <li class="date">DATE</li>
+	    <li class="temperature">TEMP</li>
+	    <li class="icon">ICON</li>
+	    <li class="percipitation">PERCIP</li>
+	  </ul>
+	</section>
+	<section id="day1" class="column box" >
+	  <ul>
+	    <li class="date">DATE</li>
+	    <li class="temperature">TEMP</li>
+	    <li class="icon">ICON</li>
+	    <li class="percipitation">PERCIP</li>
+	  </ul>
+	</section>
+
+	<section id="day2" class="column box " >
+	  <ul>
+	    <li class="date">DATE</li>
+	    <li class="temperature">TEMP</li>
+	    <li class="icon">ICON</li>
+	    <li class="percipitation">PERCIP</li>
+	  </ul>
+	</section>
+	<section id="day3" class="column box" >
+	  <ul>
+	    <li class="date">DATE</li>
+	    <li class="temperature">TEMP</li>
+	    <li class="icon">ICON</li>
+	    <li class="percipitation">PERCIP</li>
+	  </ul>
+	</section>
+	<section id="day4" class="column box" >
+	  <ul>
+	    <li class="date">DATE</li>
+	    <li class="temperature">TEMP</li>
+	    <li class="icon">ICON</li>
+	    <li class="percipitation">PERCIP</li>
+	  </ul>
+	</section>
+      </section>
     </nav>
     <!--Shows the results in individual cards -->
     <main>
-      <!--Shows the results -->
+      <section class="side-bar">
+		<form class="box is-full container">
+	  <div class="field">
+	    <label class="label">City</label>
+	    <div class="control">
+	      <input class="input" name="city" id="city" type="text" placeholder="Your dreams"/>
+	    </div>
+	  </div>
+	  <div class="field">
+	    <label class="label">State</label>
+	    <div class="control">
+	      <input class="input" name="state" id="state" type="text" placeholder="Your imgination"/>
+	    </div>
+	  </div>
+	  <div class="field">
+	    <label class="label">Start date</label>
+	    <div class="control">
+	      <input id="startDate" class="input" type="date"/>
+	      </div>
+	    </div>
+	    <div class="field">
+	      <label class="label">End date</label>
+	    <div class="control">
+	      <input id="endDate" class="input" type="date"/>
+	      </div>
+	    </div>
+
+	    <button class="button is-primary">Search for events..</button>
+	  </form>
+
+	  
+	  
+      </section>
+      
+<!-- example from Bulma element box documents -->      
+<div class="box results">
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-64x64">
+        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image"/>
+      </figure>
+    </div>
+    
+    <div class="media-content">
+      <div class="content columns">
+	<div class="column is-fifth">
+          <strong>TITLE</strong> <br></br><small>DATE</small> 
+	</div>
+	<div class="column is-four-fifths">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+	</div>
+      </div>
+    </div>
+  </article>
+</div>
+
+
+<!--Shows the results -->
       <section class="results-bar">
       </section>
       
