@@ -17,6 +17,7 @@ main {
   position: fixed;
   padding: 4rem 0rem;
   width: 100%;
+  z-index: 1;
 }
 
 #tagline {
