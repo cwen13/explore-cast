@@ -22,7 +22,8 @@ let eR = [{"title": "Big concert",
 	  "date": "2022-03-12",
 	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
 	  "sourec": "My head",
-	  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",}]
+	  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",}] 
+
 
 function buildTile (eventResults) {
   // Need to make componets
@@ -84,7 +85,16 @@ function buildTile (eventResults) {
   return 0;
 }
 
-for (let i=0; i<eR.length;i++){
-  buildTile(eR[0]);
+function main () {
+  for (let i=0; i<eR.length;i++){
+    buildTile(eR[0]);
+  }
+  return 0;
 }
+
+main();
+
+
+
+
 
