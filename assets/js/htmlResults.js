@@ -3,7 +3,29 @@
  * are created in the same way and no default tile is used
  */
 
-function buildTile (eventResults) {
+let eR = [{"title": "Big concert",
+	  "date": "2022-03-12",
+	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
+	  "sourec": "My head",
+	   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",},
+	  {"title": "Big concert",
+	  "date": "2022-03-12",
+	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
+	  "sourec": "My head",
+	   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",},
+	  {"title": "Big concert",
+	  "date": "2022-03-12",
+	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
+	  "sourec": "My head",
+	   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",},
+	  {"title": "Big concert",
+	  "date": "2022-03-12",
+	  "pic": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1600",
+	  "sourec": "My head",
+	  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",}] 
+
+
+function buildEventTile (eventResults) {
   // Need to make componets
   // Need to nest them together
   // place in DOM
@@ -15,46 +37,96 @@ function buildTile (eventResults) {
   // -Source of event
 
   // build shell
-  let container = document.create("section");
-  continainer.setAttribute("class", "box");
-  let resultTile = document.create("article");
+  let resultList = document.querySelector(".results");
+  let container = document.createElement("section");
+  container.setAttribute("class", "box results");
+  let resultTile = document.createElement("article");
   resultTile.setAttribute("class","media");
 
   // build picture elements
   let ePicEl = document.createElement("img");
-  ePicEl.setAttribute("src", eventResults("picture"));
-  let figuseEl = document.createElement("figure");
+  ePicEl.setAttribute("src", eventResults["pic"]);
+  let figureEl = document.createElement("figure");
   figureEl.setAttribute("class", "image is-64x64")
   let picSectionEl = document.createElement("section");
   picSectionEl.setAttribute("class","media-left");
 
-  // assemble picture
+  // build title and datetime items
+  let eTitleEl = document.createElement("section");
+  let dateEl = document.createElement("div");
+  dateEl.textContent=eventResults["date"]
+  let breakEl = document.createElement("br");
+  let titleEl = document.createElement("strong")
+  titleEl.textContent = eventResults["title"];
+  eTitleEl.setAttribute("class", "colulmn is-fifth");
+  let titleSectionEl = document.createElement("section");
+  titleSectionEl.setAttribute("class", "content columns");
+  let middleSection = document.createElement("section");
+  middleSection.setAttribute("class", "media-content");
+  let eDescEl = document.createElement("section");
+  eDescEl.setAttribute("class" , "column is-four-fifths");
+  eDescEl.textContent = eventResults["description"];
+  let eSourceEl = document.createElement("a");
+  eSourceEl.textContent = eventResults["source"];
+
+  // build tile
   figureEl.appendChild(ePicEl);
   picSectionEl.appendChild(figureEl);
-  resultTile.appendChild(picSectionEl);
-
-  // build title and datetime items
-  let eTitleEl = document.crreateElement("section");
-  eTitleEl.textContent = eventResults("title");
-  
-  let eDateTimeEl = document.createElement("section");
-  let date = Date.parse(eventResults("dateTime"))
-  eTitleEl.textContent = date.toUTCString();
-  let titleSectionEl = document.createElement("section");
-  titleSectionEl.setAttribute("class", "content");
-  let middleSection = document.createElement("div");
-  middleSection.setAttribute("class", "media-content");
-  titleSectionEl.appendChild(eDateTimeEl);
-  titleSectionEl.insertBefore(eTitleEl, titleSectionEl[0]);
+  eTitleEl.appendChild(dateEl);
+  eTitleEl.insertBefore(breakEl, dateEl);
+  eTitleEl.insertBefore(titleEl, breakEl);
+  titleSectionEl.appendChild(eTitleEl);
+  titleSectionEl.appendChild(eDescEl);
   middleSection.appendChild(titleSectionEl);
-  
-  let eDescrEl = document.createEement("section");
-  eDescEl.textContent = eventResults("description");
-  
-  let eSourceEl = document.createElement("a");
-  eSourceEl.textContent = eventResults("source");
+  resultTile.appendChild(middleSection);
+  resultTile.insertBefore(picSectionEl, middleSection);
+  resultList.appendChild(resultTile);
 
-  
-  
-
+  return 0;
 }
+
+function buildWeatherTile (weather) {
+  function getIcon(iconTag, j) {
+    let iconURL = "http://openweathermap.org/img/wn/"+iconTag+".png";
+    let icon = $("<img>");
+    return icon.attr("src",iconURL);
+     
+  }
+  
+  for (let i=0;i<weather.length;i++) {
+    let sectionEl = $("<section>");
+    let dateEl = $("<li>");
+    let iconEl = $("<li>");
+    let tempEl = $("<li>");
+    let percipEl = $("<li>");
+  
+    dateEl = weather[i]["date"];
+    iconEl  = iconEl.append(getIcon(weather[i]["icon"], i));
+    tempEl = weather[i]["temp"];
+    percipEl = weather[i]["percip"];
+    
+    sectionEl.attr("class", "columns box is-primary");
+    sectionEl.attr("id", "day"+i);
+    sectionEl.append(dateEl);
+    sectionEl.append(iconEl);
+    sectionEl.append(tempEl);
+    sectionEl.append(percipEl);
+    
+    $("#weather-panel").append(sectionEl);
+  }
+  return 0;
+}
+
+function main() {
+  for (let i=0; i<eR.length;i++){
+    buildEventTile(eR[0]);
+  }
+  return 0;
+}
+
+main();
+
+
+
+
+

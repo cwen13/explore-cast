@@ -1,0 +1,9 @@
+
+* {
+}
+
+main {
+  display: flex;
+  flex-direcction: column;
+  justify-content: center;
+  aligin-items: center;
