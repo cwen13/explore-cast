@@ -25,7 +25,7 @@ let eR = [{"title": "Big concert",
 	  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",}] 
 
 
-function buildTile (eventResults) {
+function buildEventTile (eventResults) {
   // Need to make componets
   // Need to nest them together
   // place in DOM
@@ -85,9 +85,41 @@ function buildTile (eventResults) {
   return 0;
 }
 
-function main () {
+function buildWeatherTile (weather) {
+  function getIcon(iconTag, j) {
+    let iconURL = "http://openweathermap.org/img/wn/"+iconTag+".png";
+    let icon = $("<img>");
+    return icon.attr("src",iconURL);
+     
+  }
+  
+  for (let i=0;i<weather.length;i++) {
+    let sectionEl = $("<section>");
+    let dateEl = $("<li>");
+    let iconEl = $("<li>");
+    let tempEl = $("<li>");
+    let percipEl = $("<li>");
+  
+    dateEl = weather[i]["date"];
+    iconEl  = iconEl.append(getIcon(weather[i]["icon"], i));
+    tempEl = weather[i]["temp"];
+    percipEl = weather[i]["percip"];
+    
+    sectionEl.attr("class", "columns box is-primary");
+    sectionEl.attr("id", "day"+i);
+    sectionEl.append(dateEl);
+    sectionEl.append(iconEl);
+    sectionEl.append(tempEl);
+    sectionEl.append(percipEl);
+    
+    $("#weather-panel").append(sectionEl);
+  }
+  return 0;
+}
+
+function main() {
   for (let i=0; i<eR.length;i++){
-    buildTile(eR[0]);
+    buildEventTile(eR[0]);
   }
   return 0;
 }
