@@ -118,7 +118,7 @@ function buildWeatherBoxes (weather) {
 }
 
 function main() {
-  for (let i=0; i<weather.length: i++) {
+  for (let i=0; i<weather.length; i++) {
     buildWeatherBoxes(weather[i])
   }
   
