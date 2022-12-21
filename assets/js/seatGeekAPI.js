@@ -131,7 +131,7 @@ function getSeatGeekData () {
 
 function SGpullEventData(eventEntry) {
   let eventData = {title:"",
-		   deateTime:"",
+		   dateTime:"",
 		   description:"",
 		   picLink:"",
 		   src:""};
@@ -144,6 +144,48 @@ function SGpullEventData(eventEntry) {
   
   return eventData;
 }
+
+function getTicketMasterData() {
+  let TMBase = "https://app.ticketmaster.com/discovery/v2/events.json?";
+  let TMLatLon = `latlong=${latLong[0]},${latLong[1]}`;
+  let TMStartDate = data["startDate"];
+  let TMEndDate = data["endDate"];
+  let TMNumEvents = "size=25";
+  let TMSort = "sort=distance,asc";
+  let TMApiKey = "apikey=oecKLpxYpNXmLk9Tha8luRcIXq2AJS6d";
+  let ticketMasterRequest = `${TMBase}&${TMLatLon}&${TMStartDate}&${TMEndDate}&${TMNumEvents}&${TMSort}&${TMApiKey}`;
+  console.log(ticketMasterRequest);
+  fetch(ticketMasterRequest)
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data);
+      let TMEventData = data["_embedded"]["events"];
+      for (let k=0;k<TMEventData.length; k++) {
+	console.log(TMEventData[k]);
+	buildEventTile(TMpullEventData(TMEventData[k]));
+      }
+    });
+  
+  return 0;
+}
+
+function TMpullEventData(eventEntry) {
+  let eventData = {title:"",
+		   dateTime:"",
+		   description:"",
+		   picLink:"",
+		   src:""};
+  eventData["title"] = eventEntry["name"];
+  eventData["dateTime"] = eventEntry["dates"]["start"]["dateTime"].split("T");
+  eventData["description"] = eventEntry["name"] +" "+ eventEntry["classifications"][0]["genre"]["name"];
+  eventData["picLink"] = eventEntry["images"][0]["url"];
+  eventData["src"] = eventEntry["url"];
+
+  return eventData;
+				 
+}
+
+
 
 // from resultshtml.js
 function buildEventTile (eventResults) {
