@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/calendar1.css"/>
+    <title>Trip Dates</title>
+</head>
+<body>
+    <div class="box">
+        <p>Select a Date</p>
+        <label>
+            <div id="inline-picker" >
+        </div>
+        <div id="hour-6" class="row time-block">
+            <div class="col-2 col-md-1 hour text-center py-3">Monday</div>
+            <textarea class="col-8 col-md-10 description" rows="3"> </textarea>
+            
+          </div>
+    </div>
+    <!--       <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
+ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.5/dayjs.min.js" integrity="sha512-Ot7ArUEhJDU0cwoBNNnWe487kjL5wAOsIYig8llY/l0P2TUFwgsAHVmrZMHsT8NGo+HwkjTJsNErS6QqIkBxDw==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    ></script>
+    <script>dayjs().format('dd DD/MMM/YYYY')</script>
+    <script type="text/javascript" src="./assets/js/calendar1.js"></script>
+</body>
+</html>

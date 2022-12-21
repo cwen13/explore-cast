@@ -1,0 +1,19 @@
+.box {
+    border: solid 2px black;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: bolder;
+    font-size: x-large;
+    padding: 0px;
+    margin: 5px;
+    background-color: bisque;
+}
+
+.calendar {
+    background-color: beige;
+}
+
+.inline-picker {
+    background-color: aqua;
+}
+

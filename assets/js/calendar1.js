@@ -5,10 +5,12 @@ var events =[
 ]
 
 //for some reason dayjs is not defined in this instance
-var currentDay = dayjs()
+//var currentDay = dayjs().date()
+var currentDay = Date()
 console.log(currentDay)
+console.log(events)
 
-dayjs().extend(calendar)
+dayjs().extend()
 
 dayjs().calendar(null, {
     sameDay: '[Today at] h:mm A', // The same day ( Today at 2:30 AM )
