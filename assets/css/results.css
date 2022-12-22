@@ -4,41 +4,39 @@
 }
 
 main {
-  padding: 10rem 0rem 5rem 0rem;
+  padding: 17.25rem 0rem 5rem 0rem;
 }
-
-
-#tagline {
-  background-color: yellow;
-}
-
-#weather-panel {
-  position: fixed;
-  padding: 4rem 0rem;
-  width: 100%;
-  z-index: 2;
-}
-
-#tagline {
-  margin: 1rem;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 2rem;
-}
-
-
 
 .side-bar {
   height: 100%;
   width: 16rem;
   position: fixed;
   z-index: 1;
-  background-color: purple;
   overflow-x: hidden;
   padding: 1rem 0.5rem 0.5rem 0.5rem;;
 }
 
 .results {
-  margin: 1rem 1rem 1rem 16.5rem;
+  margin: 1rem 1rem 1rem 17rem;
+}
+
+#weather-panel {
+  position: fixed;
+  padding: 4rem 0rem 0rem 0rem;
+  margin: 0rem 0rem 5rem 0rem;
+  width: 100%;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#tagline {
+  z-index: 3;
+  text-align: center;
+  margin: 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 2rem;
 }

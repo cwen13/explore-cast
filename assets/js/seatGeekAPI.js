@@ -1,7 +1,7 @@
 
 // object contianing city, state, startDate, & endDate
 let data = JSON.parse(localStorage.getItem("timeLocation"));
-console.log(data);		      
+
 // pulled from chalne
 let apiBase = "https://api.openweathermap.org/";
 let apiKey = "83a44da7964246bbf900a3b2168f29ce";
@@ -38,7 +38,6 @@ function pullStats(weatherEntry) {
   // add in line to get direction in NWSE
   entry["wind"] = weatherEntry["wind"]["speed"];
   entry["humidity"] = weatherEntry["main"]["humidity"];
-  console.log(entry)
   return entry;
 }
 
@@ -54,12 +53,11 @@ function getWeather (){
 	.then(response => response.json())
 	.then((info) => {
 	  localStorage.setItem("weatherResponse", JSON.stringify(data["list"]));
-	  console.log(info);
-	  for (let i=0; i<info.length; i++) {
-	    console.log(info[i]);
-	    let readingTime = (info[i]["dt_txt"]).split(" ")[1];
+	  let weatherData = info["list"];
+	  for (let i=0; i<weatherData.length; i++) {
+	    let readingTime = (weatherData[i]["dt_txt"]).split(" ")[1];
 	    if (readingTime === "12:00:00"){
-	      buildForecast(pullStats(info[i]));
+	      buildForecast(pullStats(weatherData[i]));
 	    }
 	  }
 	  getSeatGeekData();
@@ -70,8 +68,7 @@ function getWeather (){
   data = Object.assign(data,latLongObject);
 
   //rewriting the data object
-  localStorage.setItem("data",data)
-  
+  localStorage.setItem("data",data) 
   return 0;
 }
 
@@ -79,7 +76,7 @@ function getWeather (){
 function buildForecast (weather) {
   console.log(weather);
   // reach into gloaal for weeather variable
-  let weekForcast = $(".week-panel");
+  let weekForecast = $("#weather-panel");
   let section = $("<section>");
   let date = $("<section>").text("DATE:");
   let icon = $("<img>");
@@ -93,16 +90,16 @@ function buildForecast (weather) {
   wind.text("Wind speed: " + weather["wind"]);
   humidity.text("Humidity: " +weather["humidity"]);
 
-  section.attr("class","box");
+  section.attr("class","box has-background-info has-text-black");
+  section.attr("style","margin-bottom: 1.5rem;");
   section.append(date);
   section.append(icon);
   section.append(temp);
   section.append(wind);
   section.append(humidity);
-  weekForcast.append(section);
+  weekForecast.append(section);
   return 0;
 }
-
 
 function getSeatGeekData () {
   let seatGeekBase = "https://api.seatgeek.com/2/events?";
@@ -120,9 +117,7 @@ function getSeatGeekData () {
   fetch(seatGeekRequest)
     .then(response => response.json())
     .then((data) => {
-      console.log(data);
       for (let j=0; j<data["events"].length; j++) {
-	console.log(data["events"][j]);
 	buildEventTile(SGpullEventData(data["events"][j]));
       }
     });
@@ -154,14 +149,11 @@ function getTicketMasterData() {
   let TMSort = "sort=distance,asc";
   let TMApiKey = "apikey=oecKLpxYpNXmLk9Tha8luRcIXq2AJS6d";
   let ticketMasterRequest = `${TMBase}&${TMLatLon}&${TMStartDate}&${TMEndDate}&${TMNumEvents}&${TMSort}&${TMApiKey}`;
-  console.log(ticketMasterRequest);
   fetch(ticketMasterRequest)
     .then(response => response.json())
     .then((data) => {
-      console.log(data);
       let TMEventData = data["_embedded"]["events"];
       for (let k=0;k<TMEventData.length; k++) {
-	console.log(TMEventData[k]);
 	buildEventTile(TMpullEventData(TMEventData[k]));
       }
     });
@@ -184,8 +176,6 @@ function TMpullEventData(eventEntry) {
   return eventData;
 				 
 }
-
-
 
 // from resultshtml.js
 function buildEventTile (eventResults) {
@@ -248,14 +238,9 @@ function buildEventTile (eventResults) {
   return 0;
 }
 
-
-
-
-
 function main () {
   getWeather();
-  console.log(weatherRes);
-
 }
 
 main();
+
