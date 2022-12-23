@@ -66,7 +66,7 @@ function getWeather (){
   let latLongObject = {latLon: latLong};
   data = Object.assign(data,latLongObject);
   //rewriting the data object
-  localStorage.setItem("data",data) 
+  localStorage.setItem("data",JSON.stringify(data));
   return 0;
 }
 
@@ -88,7 +88,7 @@ function buildForecast (weather) {
   humidity.text("Humidity: " +weather["humidity"]);
 
   section.attr("class","box has-background-info has-text-black");
-  section.attr("style","margin-bottom: 1.5rem;");
+  section.attr("style","margin-bottom: 1.5rem; padding: 0.5rem;");
   section.append(date);
   section.append(icon);
   section.append(temp);
@@ -107,15 +107,15 @@ function getSeatGeekData () {
   let perPage = "per_page=25";
   // format for date range
   // EX: datetime_utc.gte=2012-04-01&datetime_utc.lte=2012-04-30
-  let dateAPI = "datetime_utc.gte=2022-12-22&datetime_utc.lte=2022-12-30";
+  let dateAPI = `datetime_local.gte=${data["startDate"]}&datetime_local.lte=${data["endDate"]}`;
   let seatGeekRequest = `${seatGeekBase}${latLonLocation}&${perPage}&${dateAPI}&${seatGeekClientID}`;
   let events = {};
-  console.log(seatGeekRequest);
+//  console.log(seatGeekRequest);
   fetch(seatGeekRequest)
     .then(response => response.json())
-    .then((data) => {
-      for (let j=0; j<data["events"].length; j++) {
-	buildEventTile(SGpullEventData(data["events"][j]));
+    .then((info) => {
+      for (let j=0; j<info["events"].length; j++) {
+	buildEventTile(SGpullEventData(info["events"][j]));
       }
     });
   return 0;
@@ -146,7 +146,7 @@ function getTicketMasterData() {
   let TMSort = "sort=distance,asc";
   let TMApiKey = "apikey=oecKLpxYpNXmLk9Tha8luRcIXq2AJS6d";
   let ticketMasterRequest = `${TMBase}&${TMLatLon}&${TMStartDate}&${TMEndDate}&${TMNumEvents}&${TMSort}&${TMApiKey}`;
-  console.log(ticketMasterRequest);
+//  console.log(ticketMasterRequest);
   fetch(ticketMasterRequest)
     .then(response => response.json())
     .then((data) => {
@@ -230,7 +230,6 @@ function buildEventTile (eventResults) {
   resultTile.appendChild(middleSection);
   resultTile.insertBefore(picSectionEl, middleSection);
   resultList.appendChild(resultTile);
-
   return 0;
 }
 

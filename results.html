@@ -13,19 +13,18 @@
   </head>
   <body>
     <!-- Header that shows the weather -->
-    <header class="">
+    <header>
       <!-- Nav ar on the side showing entries for location, dates, submit button-->
-      <nav class="has-navbar-fixed-top has-background-danger">
-	<section id="tagline" class="is-full " >
-	  The Perfect Place to find The Perfect Thing.
-	</section>
-	<section id="weather-panel" class="columns has-background-danger">
-	</section>
-      </nav>
+      <section id="tagline" class="is-full has-navbar-fixed-top has-background-danger">
+	The Perfect Place to find The Perfect Thing.
+      </section>
+      <!-- Show weather results -->
+      <section id="weather-panel" class="columns has-background-danger">
+      </section>
     </header>
     <!--Shows the results in individual cards -->
-    <main class="has-background-warning">
-      <section class="side-bar has-background-danger">
+    <main class="has-background-warning columns">
+      <section class="side-bar has-background-danger column is-one-quarter">
 	<form class="box is-two-thirds">
 	  <div class="field">
 	    <label class="label">City</label>
@@ -103,18 +102,14 @@
 	      <input id="endDate" class="input" type="date"/>
 	      </div>
 	    </div>
-	    <button class="button is-primary">Search for events..</button>
+	    <button class="button is-primary">Search events</button>
 	  </form>
       </section>
       
-<!-- example from Bulma element box documents -->      
-<div class="box results">
-
-</div>
-<!--Shows the results -->
-      <section class="results-bar">
-      </section>
-      
+      <!-- Show results -->      
+      <div class="box results column">
+	
+      </div>
     </main>
     
     <footer>

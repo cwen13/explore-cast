@@ -2,40 +2,47 @@
 * {  
 }
 
+header {
+  position: sticky;
+}
+
 main {
-  padding: 17.25rem 0rem 5rem 0rem;
+  margin: 0rem 0rem 0rem 01rem;
+  justify-content: flex-start;
 }
 
 .side-bar {
-  height: 100%;
+  height: 100vp;
   width: 16rem;
-  position: fixed;
+  position: static;
   z-index: 1;
-  overflow-x: hidden;
   padding: 1rem 0.5rem 0.5rem 0.5rem;;
+  margin-left: 0;
+}
+
+.side-bar .box {
+  margin: 0rem 0rem 0rem 1rem;
 }
 
 .results {
-  margin: 1rem 1rem 1rem 17rem;
+  margin: 1.75rem 1.75rem 1rem 1rem;
 }
 
 #weather-panel {
-  position: fixed;
-  padding: 4rem 0rem 0rem 0rem;
-  margin: 0rem 0rem 5rem 0rem;
+  position: sticky;
+  margin: 0rem 0rem 0rem 0rem;
   width: 100%;
   z-index: 2;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-evenly;
 }
+
 
 #tagline {
   z-index: 3;
   text-align: center;
-  margin: 1rem;
-  position: fixed;
-  top: 0;
   width: 100%;
   height: 2rem;
 }

@@ -1,7 +1,6 @@
-
-let data = {};
-
+// gather the data from the form and localStorage it
 let handleGrab = (event) => {
+  let data = {};
   event.preventDefault();
   data["city"] = $("#city").val();
   let stateEl = document.getElementById("selectState");
