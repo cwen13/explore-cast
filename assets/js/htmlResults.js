@@ -85,7 +85,7 @@ function buildEventTile (eventResults) {
   return 0;
 }
 
-function buildWeatherTile (weather) {
+function buildWeatherBoxes (weather) {
   function getIcon(iconTag, j) {
     let iconURL = "http://openweathermap.org/img/wn/"+iconTag+".png";
     let icon = $("<img>");
@@ -118,6 +118,10 @@ function buildWeatherTile (weather) {
 }
 
 function main() {
+  for (let i=0; i<weather.length; i++) {
+    buildWeatherBoxes(weather[i])
+  }
+  
   for (let i=0; i<eR.length;i++){
     buildEventTile(eR[0]);
   }
