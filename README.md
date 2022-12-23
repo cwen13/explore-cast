@@ -1,4 +1,4 @@
-# event-track
+# explore-cast
 Find out what is going on in a selected area and the weather associated with it.
 
 ## PRE project planning
@@ -12,10 +12,10 @@ Search for events and weather to plan the day/nightUser Story: AS a travler I WA
 ### CSS framework
 Bulma
 ### APIs to use
- 1. [[https://openweathermap.org/forecast5][OpenWeather]]
- 2. [[https://www.meetup.com/api/guide/][meetup]]
- 3. [[https://platform.seatgeek.com/][SeatGeek]]
- 4. [[https://developer.ticketmaster.com/products-and-docs/apis/getting-started/][ticketmaster]]
+ 1. [OpenWeather](https://openweathermap.org/forecast5)
+ 2. [SeatGeek](https://platform.seatgeek.com/)
+ 3. [ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/)
+ 
 
 ### Additonal expansions
  - facebook events
