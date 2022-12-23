@@ -2,7 +2,7 @@
 // object contianing city, state, startDate, & endDate
 let data = JSON.parse(localStorage.getItem("timeLocation"));
 
-// pulled from chalne
+// pulled from challenge
 let apiBase = "https://api.openweathermap.org/";
 let apiKey = "83a44da7964246bbf900a3b2168f29ce";
 let apiBaseWeather = apiBase + "data/2.5/forecast?";
@@ -41,7 +41,6 @@ function pullStats(weatherEntry) {
   return entry;
 }
 
-
 function getWeather (){
   let apiLatLon = `${apiBaseLatLon}q=${data['city']},${data['state']}&limit=10&appid=${apiKey}`;
    fetch(apiLatLon)
@@ -66,7 +65,6 @@ function getWeather (){
     });
   let latLongObject = {latLon: latLong};
   data = Object.assign(data,latLongObject);
-
   //rewriting the data object
   localStorage.setItem("data",data) 
   return 0;
@@ -133,7 +131,7 @@ function SGpullEventData(eventEntry) {
   eventData["title"] = eventEntry["short_title"];
   eventData["dateTime"] = eventEntry["datetime_local"].split("T");
   eventData["description"] = eventEntry["title"];
-  // TODO Fill in
+  // TODO Fill in Watch for copyright
   eventData["picLinik"] = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpngimg.com%2Fuploads%2Fbasketball%2Fbasketball_PNG102482.png&f=1&nofb=1&ipt=6eaac64b06eb398f9fa526440069a531d3e307b0391bf2664d8bda57818f2983&ipo=images";
   eventData["src"] = eventEntry["url"];
   
