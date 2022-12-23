@@ -2,7 +2,7 @@
 // object contianing city, state, startDate, & endDate
 let data = JSON.parse(localStorage.getItem("timeLocation"));
 
-// pulled from chalne
+// pulled from challenge
 let apiBase = "https://api.openweathermap.org/";
 let apiKey = "83a44da7964246bbf900a3b2168f29ce";
 let apiBaseWeather = apiBase + "data/2.5/forecast?";
@@ -41,7 +41,6 @@ function pullStats(weatherEntry) {
   return entry;
 }
 
-
 function getWeather (){
   let apiLatLon = `${apiBaseLatLon}q=${data['city']},${data['state']}&limit=10&appid=${apiKey}`;
    fetch(apiLatLon)
@@ -66,15 +65,13 @@ function getWeather (){
     });
   let latLongObject = {latLon: latLong};
   data = Object.assign(data,latLongObject);
-
   //rewriting the data object
-  localStorage.setItem("data",data) 
+  localStorage.setItem("data",JSON.stringify(data));
   return 0;
 }
 
 //from chalenge
 function buildForecast (weather) {
-  console.log(weather);
   // reach into gloaal for weeather variable
   let weekForecast = $("#weather-panel");
   let section = $("<section>");
@@ -91,7 +88,7 @@ function buildForecast (weather) {
   humidity.text("Humidity: " +weather["humidity"]);
 
   section.attr("class","box has-background-info has-text-black");
-  section.attr("style","margin-bottom: 1.5rem;");
+  section.attr("style","margin-bottom: 1.5rem; padding: 0.5rem;");
   section.append(date);
   section.append(icon);
   section.append(temp);
@@ -110,15 +107,15 @@ function getSeatGeekData () {
   let perPage = "per_page=25";
   // format for date range
   // EX: datetime_utc.gte=2012-04-01&datetime_utc.lte=2012-04-30
-  let dateAPI = "datetime_utc.gte=2022-12-22&datetime_utc.lte=2022-12-30";
+  let dateAPI = `datetime_local.gte=${data["startDate"]}&datetime_local.lte=${data["endDate"]}`;
   let seatGeekRequest = `${seatGeekBase}${latLonLocation}&${perPage}&${dateAPI}&${seatGeekClientID}`;
   let events = {};
-  //  console.log(seatGeekRequest);
+//  console.log(seatGeekRequest);
   fetch(seatGeekRequest)
     .then(response => response.json())
-    .then((data) => {
-      for (let j=0; j<data["events"].length; j++) {
-	buildEventTile(SGpullEventData(data["events"][j]));
+    .then((info) => {
+      for (let j=0; j<info["events"].length; j++) {
+	buildEventTile(SGpullEventData(info["events"][j]));
       }
     });
   return 0;
@@ -133,8 +130,8 @@ function SGpullEventData(eventEntry) {
   eventData["title"] = eventEntry["short_title"];
   eventData["dateTime"] = eventEntry["datetime_local"].split("T");
   eventData["description"] = eventEntry["title"];
-  // TODO Fill in
-  eventData["picLinik"] = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpngimg.com%2Fuploads%2Fbasketball%2Fbasketball_PNG102482.png&f=1&nofb=1&ipt=6eaac64b06eb398f9fa526440069a531d3e307b0391bf2664d8bda57818f2983&ipo=images";
+  // TODO Fill in Watch for copyright
+  eventData["picLinik"] =  eventEntry["performers"][0]["image"];
   eventData["src"] = eventEntry["url"];
   
   return eventData;
@@ -149,6 +146,7 @@ function getTicketMasterData() {
   let TMSort = "sort=distance,asc";
   let TMApiKey = "apikey=oecKLpxYpNXmLk9Tha8luRcIXq2AJS6d";
   let ticketMasterRequest = `${TMBase}&${TMLatLon}&${TMStartDate}&${TMEndDate}&${TMNumEvents}&${TMSort}&${TMApiKey}`;
+//  console.log(ticketMasterRequest);
   fetch(ticketMasterRequest)
     .then(response => response.json())
     .then((data) => {
@@ -157,7 +155,6 @@ function getTicketMasterData() {
 	buildEventTile(TMpullEventData(TMEventData[k]));
       }
     });
-  
   return 0;
 }
 
@@ -174,7 +171,6 @@ function TMpullEventData(eventEntry) {
   eventData["src"] = eventEntry["url"];
 
   return eventData;
-				 
 }
 
 // from resultshtml.js
@@ -234,7 +230,6 @@ function buildEventTile (eventResults) {
   resultTile.appendChild(middleSection);
   resultTile.insertBefore(picSectionEl, middleSection);
   resultList.appendChild(resultTile);
-
   return 0;
 }
 
