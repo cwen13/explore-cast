@@ -2,9 +2,6 @@
 * {  
 }
 
-header {
-  position: sticky;
-}
 
 main {
   margin: 0rem 0rem 0rem 01rem;
@@ -29,7 +26,6 @@ main {
 }
 
 #weather-panel {
-  position: sticky;
   margin: 0rem 0rem 0rem 0rem;
   width: 100%;
   z-index: 2;
@@ -55,6 +51,12 @@ main {
   .results {
     margin: 0rem 1.5rem 0rem 1.5rem;
   }
-
 }
 
+@media screen and (min-width: 768px) {
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+  }
+}

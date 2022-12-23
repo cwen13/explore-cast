@@ -131,7 +131,7 @@ function SGpullEventData(eventEntry) {
   eventData["dateTime"] = eventEntry["datetime_local"].split("T");
   eventData["description"] = eventEntry["title"];
   // TODO Fill in Watch for copyright
-  eventData["picLinik"] =  eventEntry["performers"][0]["image"];
+  eventData["picLink"] =  eventEntry["performers"][0]["image"];
   eventData["src"] = eventEntry["url"];
   
   return eventData;
@@ -146,7 +146,7 @@ function getTicketMasterData() {
   let TMSort = "sort=distance,asc";
   let TMApiKey = "apikey=oecKLpxYpNXmLk9Tha8luRcIXq2AJS6d";
   let ticketMasterRequest = `${TMBase}&${TMLatLon}&${TMStartDate}&${TMEndDate}&${TMNumEvents}&${TMSort}&${TMApiKey}`;
-//  console.log(ticketMasterRequest);
+  console.log(ticketMasterRequest);
   fetch(ticketMasterRequest)
     .then(response => response.json())
     .then((data) => {
@@ -194,7 +194,7 @@ function buildEventTile (eventResults) {
 
   // build picture elements
   let ePicEl = document.createElement("img");
-  ePicEl.setAttribute("src", eventResults["pic"]);
+  ePicEl.setAttribute("src", eventResults["picLink"]);
   let figureEl = document.createElement("figure");
   figureEl.setAttribute("class", "image is-64x64")
   let picSectionEl = document.createElement("section");
