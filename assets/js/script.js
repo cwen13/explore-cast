@@ -242,6 +242,8 @@ function buildEventTile (eventResults, source) {
 
 function main () {
   getWeather();
+  let taglineEl = $("#tagline");
+  taglineEl.text(`Things that are happeneing in ${data['city']}, ${data['state']}`);
 }
 
 main();
