@@ -133,7 +133,10 @@ function SGpullEventData(eventEntry) {
   eventData["date"] = eventEntry["datetime_local"].split("T")[0];
   eventData["time"] =  eventEntry["datetime_local"].split("T")[1];
   eventData["description"] = eventEntry["title"];
-  eventData["picLinik"] =  eventEntry["performers"][0]["image"];
+
+  // TODO Fill in Watch for copyright
+  eventData["picLink"] =  eventEntry["performers"][0]["image"];
+
   eventData["src"] = eventEntry["url"];
   
   return eventData;
@@ -199,7 +202,7 @@ function buildEventTile (eventResults, source) {
 
   // build picture elements
   let ePicEl = document.createElement("img");
-  ePicEl.setAttribute("src", eventResults["pic"]);
+  ePicEl.setAttribute("src", eventResults["picLink"]);
   let figureEl = document.createElement("figure");
   figureEl.setAttribute("class", "image is-64x64 media-left column is-one-quarter")
 
