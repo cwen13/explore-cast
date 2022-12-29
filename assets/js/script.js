@@ -1,5 +1,6 @@
 
 // object contianing city, state, startDate, & endDate
+// data ={city:<CITY>, state:<STATE>, startDate:<SDATE>, endDate<EDATE>}
 let data = JSON.parse(localStorage.getItem("timeLocation"));
 
 // pulled from challenge
@@ -110,12 +111,12 @@ function getSeatGeekData () {
   let dateAPI = `datetime_local.gte=${data["startDate"]}&datetime_local.lte=${data["endDate"]}`;
   let seatGeekRequest = `${seatGeekBase}${latLonLocation}&${perPage}&${dateAPI}&${seatGeekClientID}`;
   let events = {};
-//  console.log(seatGeekRequest);
+  console.log(seatGeekRequest);
   fetch(seatGeekRequest)
     .then(response => response.json())
     .then((info) => {
       for (let j=0; j<info["events"].length; j++) {
-	buildEventTile(SGpullEventData(info["events"][j]));
+	buildEventTile(SGpullEventData(info["events"][j]), "SeatGeek");
       }
     });
   return 0;
@@ -123,14 +124,15 @@ function getSeatGeekData () {
 
 function SGpullEventData(eventEntry) {
   let eventData = {title:"",
-		   dateTime:"",
+		   date:"",
+		   time:"",
 		   description:"",
 		   picLink:"",
 		   src:""};
   eventData["title"] = eventEntry["short_title"];
-  eventData["dateTime"] = eventEntry["datetime_local"].split("T");
+  eventData["date"] = eventEntry["datetime_local"].split("T")[0];
+  eventData["time"] =  eventEntry["datetime_local"].split("T")[1];
   eventData["description"] = eventEntry["title"];
-  // TODO Fill in Watch for copyright
   eventData["picLinik"] =  eventEntry["performers"][0]["image"];
   eventData["src"] = eventEntry["url"];
   
@@ -146,13 +148,13 @@ function getTicketMasterData() {
   let TMSort = "sort=distance,asc";
   let TMApiKey = "apikey=oecKLpxYpNXmLk9Tha8luRcIXq2AJS6d";
   let ticketMasterRequest = `${TMBase}&${TMLatLon}&${TMStartDate}&${TMEndDate}&${TMNumEvents}&${TMSort}&${TMApiKey}`;
-//  console.log(ticketMasterRequest);
+  console.log(ticketMasterRequest);
   fetch(ticketMasterRequest)
     .then(response => response.json())
     .then((data) => {
       let TMEventData = data["_embedded"]["events"];
       for (let k=0;k<TMEventData.length; k++) {
-	buildEventTile(TMpullEventData(TMEventData[k]));
+	buildEventTile(TMpullEventData(TMEventData[k]), "TicketMaster");
       }
     });
   return 0;
@@ -160,13 +162,16 @@ function getTicketMasterData() {
 
 function TMpullEventData(eventEntry) {
   let eventData = {title:"",
-		   dateTime:"",
+		   date:"",
+		   time:"",
 		   description:"",
 		   picLink:"",
 		   src:""};
   eventData["title"] = eventEntry["name"];
-  eventData["dateTime"] = eventEntry["dates"]["start"]["dateTime"].split("T");
+  eventData["date"] = eventEntry["dates"]["start"]["localDate"];
+  eventData["time"] = eventEntry["dates"]["start"]["localTime"];
   eventData["description"] = eventEntry["name"] +" "+ eventEntry["classifications"][0]["genre"]["name"];
+  
   eventData["picLink"] = eventEntry["images"][0]["url"];
   eventData["src"] = eventEntry["url"];
 
@@ -174,7 +179,7 @@ function TMpullEventData(eventEntry) {
 }
 
 // from resultshtml.js
-function buildEventTile (eventResults) {
+function buildEventTile (eventResults, source) {
   // Need to make componets
   // Need to nest them together
   // place in DOM
@@ -190,51 +195,55 @@ function buildEventTile (eventResults) {
   let container = document.createElement("section");
   container.setAttribute("class", "box results");
   let resultTile = document.createElement("article");
-  resultTile.setAttribute("class","media");
+  resultTile.setAttribute("class","media columns");
 
   // build picture elements
   let ePicEl = document.createElement("img");
   ePicEl.setAttribute("src", eventResults["pic"]);
   let figureEl = document.createElement("figure");
-  figureEl.setAttribute("class", "image is-64x64")
-  let picSectionEl = document.createElement("section");
-  picSectionEl.setAttribute("class","media-left");
+  figureEl.setAttribute("class", "image is-64x64 media-left column is-one-quarter")
 
   // build title and datetime items
   let eTitleEl = document.createElement("section");
   let dateEl = document.createElement("div");
-  dateEl.textContent=eventResults["date"]
-  let breakEl = document.createElement("br");
-  let titleEl = document.createElement("strong")
+  dateEl.setAttribute("class", "date");
+  dateEl.textContent = eventResults["date"];
+  let timeEl = document.createElement("div");
+  timeEl.setAttribute("class", "time");
+  timeEl.textContent = eventResults["time"];
+  let titleEl = document.createElement("div");
+  titleEl.setAttribute("class", "title is-4");
   titleEl.textContent = eventResults["title"];
-  eTitleEl.setAttribute("class", "colulmn is-fifth");
   let titleSectionEl = document.createElement("section");
-  titleSectionEl.setAttribute("class", "content columns");
-  let middleSection = document.createElement("section");
-  middleSection.setAttribute("class", "media-content");
-  let eDescEl = document.createElement("section");
-  eDescEl.setAttribute("class" , "column is-four-fifths");
-  eDescEl.textContent = eventResults["description"];
+  titleSectionEl.setAttribute("class", "content column is-two-fifths v-centered");
   let eSourceEl = document.createElement("a");
-  eSourceEl.textContent = eventResults["source"];
+  eSourceEl.setAttribute("href", eventResults["source"]);
+  eSourceEl.setAttribute("class" , "column v-centered");
+  eSourceEl.textContent = eventResults["description"];
+  let siteEl = document.createElement("section");
+  siteEl.textContent = source;
+  let infoEl = document.createElement("section");
+  infoEl.setAttribute("class", "content column ");
+  
 
   // build tile
-  figureEl.appendChild(ePicEl);
-  picSectionEl.appendChild(figureEl);
-  eTitleEl.appendChild(dateEl);
-  eTitleEl.insertBefore(breakEl, dateEl);
-  eTitleEl.insertBefore(titleEl, breakEl);
-  titleSectionEl.appendChild(eTitleEl);
-  titleSectionEl.appendChild(eDescEl);
-  middleSection.appendChild(titleSectionEl);
-  resultTile.appendChild(middleSection);
-  resultTile.insertBefore(picSectionEl, middleSection);
-  resultList.appendChild(resultTile);
+  figureEl.append(ePicEl);
+  resultTile.append(figureEl);
+  titleSectionEl.append(titleEl);
+  titleSectionEl.append(dateEl);
+  titleSectionEl.append(timeEl);
+  resultTile.append(titleSectionEl);
+  infoEl.append(eSourceEl);
+  infoEl.append(siteEl);
+  resultTile.append(infoEl);
+  resultList.append(resultTile);
   return 0;
 }
 
 function main () {
   getWeather();
+  let taglineEl = $("#tagline");
+  taglineEl.text(`Things that are happeneing in ${data['city']}, ${data['state']}`);
 }
 
 main();
