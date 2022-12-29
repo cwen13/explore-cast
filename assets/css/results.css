@@ -1,11 +1,24 @@
 
 * {  
 }
+header {
+  position: sticky;
+  top:0;
+  z-index:2;
+  width: 100vw;
+}
 
 
 main {
   margin: 0rem 0rem 0rem 01rem;
   justify-content: flex-start;
+}
+
+.media .content {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  
 }
 
 .side-bar {
