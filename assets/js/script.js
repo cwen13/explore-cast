@@ -111,7 +111,7 @@ function getSeatGeekData () {
   let dateAPI = `datetime_local.gte=${data["startDate"]}&datetime_local.lte=${data["endDate"]}`;
   let seatGeekRequest = `${seatGeekBase}${latLonLocation}&${perPage}&${dateAPI}&${seatGeekClientID}`;
   let events = {};
-  console.log(seatGeekRequest);
+//  console.log(seatGeekRequest);
   fetch(seatGeekRequest)
     .then(response => response.json())
     .then((info) => {
@@ -148,7 +148,7 @@ function getTicketMasterData() {
   let TMSort = "sort=distance,asc";
   let TMApiKey = "apikey=oecKLpxYpNXmLk9Tha8luRcIXq2AJS6d";
   let ticketMasterRequest = `${TMBase}&${TMLatLon}&${TMStartDate}&${TMEndDate}&${TMNumEvents}&${TMSort}&${TMApiKey}`;
-  console.log(ticketMasterRequest);
+//  console.log(ticketMasterRequest);
   fetch(ticketMasterRequest)
     .then(response => response.json())
     .then((data) => {
