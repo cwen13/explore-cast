@@ -9,7 +9,6 @@ let apiKey = "83a44da7964246bbf900a3b2168f29ce";
 let apiBaseWeather = apiBase + "data/2.5/forecast?";
 let apiBaseLatLon = apiBase + "geo/1.0/direct?";
 let apiBaseToday = apiBase + "data/2.5/weather?";
-let apiLatLon = `${apiBaseLatLon}q=${data['city']},${data['state']}&limit=10&appid=${apiKey}`;
 let latLong;
 let weatherRes;
 
@@ -58,6 +57,7 @@ function getWeather (){
 	    let readingTime = (weatherData[i]["dt_txt"]).split(" ")[1];
 	    if (readingTime === "12:00:00"){
 	      buildForecast(pullStats(weatherData[i]));
+	      //buildforcast(entry);
 	    }
 	  }
 	  getSeatGeekData();
@@ -71,9 +71,8 @@ function getWeather (){
   return 0;
 }
 
-//from chalenge
 function buildForecast (weather) {
-  // reach into gloaal for weeather variable
+  // reach into gloaal for weather variable
   let weekForecast = $("#weather-panel");
   let section = $("<section>");
   let date = $("<section>").text("DATE:");
@@ -111,12 +110,13 @@ function getSeatGeekData () {
   let dateAPI = `datetime_local.gte=${data["startDate"]}&datetime_local.lte=${data["endDate"]}`;
   let seatGeekRequest = `${seatGeekBase}${latLonLocation}&${perPage}&${dateAPI}&${seatGeekClientID}`;
   let events = {};
-//  console.log(seatGeekRequest);
+  console.log(seatGeekRequest);
   fetch(seatGeekRequest)
     .then(response => response.json())
     .then((info) => {
       for (let j=0; j<info["events"].length; j++) {
 	buildEventTile(SGpullEventData(info["events"][j]), "SeatGeek");
+	//buildEventTile(eventData);
       }
     });
   return 0;
@@ -148,7 +148,7 @@ function getTicketMasterData() {
   let TMSort = "sort=distance,asc";
   let TMApiKey = "apikey=oecKLpxYpNXmLk9Tha8luRcIXq2AJS6d";
   let ticketMasterRequest = `${TMBase}&${TMLatLon}&${TMStartDate}&${TMEndDate}&${TMNumEvents}&${TMSort}&${TMApiKey}`;
-//  console.log(ticketMasterRequest);
+  console.log(ticketMasterRequest);
   fetch(ticketMasterRequest)
     .then(response => response.json())
     .then((data) => {
@@ -189,6 +189,7 @@ function buildEventTile (eventResults, source) {
   // -Description
   // -Picture linlk
   // -Source of event
+  // -Ticket seller
 
   // build shell
   let resultList = document.querySelector(".results");
@@ -217,7 +218,7 @@ function buildEventTile (eventResults, source) {
   let titleSectionEl = document.createElement("section");
   titleSectionEl.setAttribute("class", "content column is-two-fifths v-centered");
   let eSourceEl = document.createElement("a");
-  eSourceEl.setAttribute("href", eventResults["source"]);
+  eSourceEl.setAttribute("href", eventResults["src"]);
   eSourceEl.setAttribute("class" , "column v-centered");
   eSourceEl.textContent = eventResults["description"];
   let siteEl = document.createElement("section");
@@ -243,7 +244,7 @@ function buildEventTile (eventResults, source) {
 function main () {
   getWeather();
   let taglineEl = $("#tagline");
-  taglineEl.text(`Things that are happeneing in ${data['city']}, ${data['state']}`);
+  taglineEl.text(`Things that are happening in ${data['city']}, ${data['state']}`);
 }
 
 main();
