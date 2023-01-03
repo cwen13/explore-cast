@@ -9,7 +9,6 @@ let apiKey = "83a44da7964246bbf900a3b2168f29ce";
 let apiBaseWeather = apiBase + "data/2.5/forecast?";
 let apiBaseLatLon = apiBase + "geo/1.0/direct?";
 let apiBaseToday = apiBase + "data/2.5/weather?";
-let apiLatLon = `${apiBaseLatLon}q=${data['city']},${data['state']}&limit=10&appid=${apiKey}`;
 let latLong;
 let weatherRes;
 
@@ -58,6 +57,7 @@ function getWeather (){
 	    let readingTime = (weatherData[i]["dt_txt"]).split(" ")[1];
 	    if (readingTime === "12:00:00"){
 	      buildForecast(pullStats(weatherData[i]));
+	      //buildforcast(entry);
 	    }
 	  }
 	  getSeatGeekData();
@@ -71,9 +71,8 @@ function getWeather (){
   return 0;
 }
 
-//from chalenge
 function buildForecast (weather) {
-  // reach into gloaal for weeather variable
+  // reach into gloaal for weather variable
   let weekForecast = $("#weather-panel");
   let section = $("<section>");
   let date = $("<section>").text("DATE:");
@@ -117,6 +116,7 @@ function getSeatGeekData () {
     .then((info) => {
       for (let j=0; j<info["events"].length; j++) {
 	buildEventTile(SGpullEventData(info["events"][j]), "SeatGeek");
+	//buildEventTile(eventData);
       }
     });
   return 0;
@@ -133,10 +133,14 @@ function SGpullEventData(eventEntry) {
   eventData["date"] = eventEntry["datetime_local"].split("T")[0];
   eventData["time"] =  eventEntry["datetime_local"].split("T")[1];
   eventData["description"] = eventEntry["title"];
+//<<<<<<< develop/tileInfo
+  eventData["picLink"] =  eventEntry["performers"][0]["image"];
+//=======
 
   // TODO Fill in Watch for copyright
   eventData["picLink"] =  eventEntry["performers"][0]["image"];
 
+//>>>>>>> main
   eventData["src"] = eventEntry["url"];
   
   return eventData;
@@ -192,6 +196,7 @@ function buildEventTile (eventResults, source) {
   // -Description
   // -Picture linlk
   // -Source of event
+  // -Ticket seller
 
   // build shell
   let resultList = document.querySelector(".results");
@@ -220,7 +225,7 @@ function buildEventTile (eventResults, source) {
   let titleSectionEl = document.createElement("section");
   titleSectionEl.setAttribute("class", "content column is-two-fifths v-centered");
   let eSourceEl = document.createElement("a");
-  eSourceEl.setAttribute("href", eventResults["source"]);
+  eSourceEl.setAttribute("href", eventResults["src"]);
   eSourceEl.setAttribute("class" , "column v-centered");
   eSourceEl.textContent = eventResults["description"];
   let siteEl = document.createElement("section");
@@ -246,7 +251,7 @@ function buildEventTile (eventResults, source) {
 function main () {
   getWeather();
   let taglineEl = $("#tagline");
-  taglineEl.text(`Things that are happeneing in ${data['city']}, ${data['state']}`);
+  taglineEl.text(`Things that are happening in ${data['city']}, ${data['state']}`);
 }
 
 main();
