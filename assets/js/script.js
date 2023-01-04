@@ -57,7 +57,6 @@ function getWeather (){
 	    let readingTime = (weatherData[i]["dt_txt"]).split(" ")[1];
 	    if (readingTime === "12:00:00"){
 	      buildForecast(pullStats(weatherData[i]));
-	      //buildforcast(entry);
 	    }
 	  }
 	  getSeatGeekData();
@@ -114,6 +113,7 @@ function getSeatGeekData () {
   fetch(seatGeekRequest)
     .then(response => response.json())
     .then((info) => {
+      console.log("SEATGEEK");
       for (let j=0; j<info["events"].length; j++) {
 	buildEventTile(SGpullEventData(info["events"][j]), "SeatGeek");
 	//buildEventTile(eventData);
@@ -241,11 +241,26 @@ function buildEventTile (eventResults, source) {
   return 0;
 }
 
+let handleGrab = (event) => {
+  let data = {};
+  event.preventDefault();
+  data["city"] = $("#city").val();
+  let stateEl = document.getElementById("selectState");
+  data["state"] = stateEl.options[stateEl.selectedIndex].value;
+  data["startDate"] =  $("#startDate").val();
+  data["endDate"] = $("#endDate").val();
+  console.log(data);
+  localStorage.setItem("timeLocation", JSON.stringify(data));
+  window.location.href = "./results.html";
+  return 0;
+}
+
 function main () {
   getWeather();
   let taglineEl = $("#tagline");
   taglineEl.text(`Things that are happening in ${data['city']}, ${data['state']}`);
 }
 
+$(".button").on('click',handleGrab);
 main();
 
