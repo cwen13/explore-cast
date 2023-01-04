@@ -133,7 +133,14 @@ function SGpullEventData(eventEntry) {
   eventData["date"] = eventEntry["datetime_local"].split("T")[0];
   eventData["time"] =  eventEntry["datetime_local"].split("T")[1];
   eventData["description"] = eventEntry["title"];
+//<<<<<<< develop/tileInfo
   eventData["picLink"] =  eventEntry["performers"][0]["image"];
+//=======
+
+  // TODO Fill in Watch for copyright
+  eventData["picLink"] =  eventEntry["performers"][0]["image"];
+
+//>>>>>>> main
   eventData["src"] = eventEntry["url"];
   
   return eventData;
