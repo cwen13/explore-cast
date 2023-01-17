@@ -12,6 +12,8 @@ let apiBaseToday = apiBase + "data/2.5/weather?";
 let latLong;
 let weatherRes;
 
+let SGentries, TMentries
+
 function getLatLon(geoJson, state) {
   for (let i=0; i<geoJson.length; i++) {
     if (geoJson[i]["state"] == state) {
@@ -59,16 +61,49 @@ function getWeather (){
 	      buildForecast(pullStats(weatherData[i]));
 	    }
 	  }
-	  getSeatGeekData();
-	  getTicketMasterData();
+	  let seatGeekBase = "https://api.seatgeek.com/2/events?";
+	  let seatGeekClientID = "client_id=MzExMjU4NzF8MTY3MTU4MDU0NS4wMTgzOTY"
+	  // for location lat/lon and range
+	  // EX: geoip=98.213.245.205&range=12mi'
+	  let latLonLocation = `lat=${latLong[0]}&lon=${latLong[1]}&range=25mi`;
+	  let perPage = "per_page=25";
+	  // format for date range
+	  // EX: datetime_utc.gte=2012-04-01&datetime_utc.lte=2012-04-30
+	  let dateAPI = `datetime_local.gte=${data["startDate"]}&datetime_local.lte=${data["endDate"]}`;
+	  let seatGeekRequest = `${seatGeekBase}${latLonLocation}&${perPage}&${dateAPI}&${seatGeekClientID}`;
+
+	  let TMBase = "https://app.ticketmaster.com/discovery/v2/events.json?";
+	  let TMLatLon = `latlong=${latLong[0]},${latLong[1]}`;
+	  let TMStartDate = data["startDate"];
+	  let TMEndDate = data["endDate"];
+	  let TMNumEvents = "size=25";
+	  let TMSort = "sort=distance,asc";
+	  let TMApiKey = "apikey=oecKLpxYpNXmLk9Tha8luRcIXq2AJS6d";
+	  let ticketMasterRequest = `${TMBase}&${TMLatLon}&${TMStartDate}&${TMEndDate}&${TMNumEvents}&${TMSort}&${TMApiKey}`;
+	  let requests = [seatGeekRequest, ticketMasterRequest];
+	  const promises = requests.map((url) => fetch(url));
+	  Promise.all(promises)
+	    .then((data) => Promise.all(data.map((d) => d.json())))
+	    .then((data) => {
+	      let SGres = data[0]["events"];
+	      let TMres = data[1]["_embedded"]["events"];
+	      console.log(SGres);
+	      console.log(TMres);
+	      for (let i=0; i<SGres.length; i++) {
+		console.log(i);
+		buildEventTile(SGpullEventData(SGres[i]), "SeatGeek");
+		buildEventTile(TMpullEventData(TMres[i]), "Ticket Master");
+	      }
+	    });
 	});
-    });
+    })
   let latLongObject = {latLon: latLong};
   data = Object.assign(data,latLongObject);
   //rewriting the data object
   localStorage.setItem("data",JSON.stringify(data));
   return 0;
 }
+
 
 function buildForecast (weather) {
   // reach into gloaal for weather variable
@@ -115,11 +150,11 @@ function getSeatGeekData () {
     .then((info) => {
       console.log("SEATGEEK");
       for (let j=0; j<info["events"].length; j++) {
-	buildEventTile(SGpullEventData(info["events"][j]), "SeatGeek");
-	//buildEventTile(eventData);
+	return  SGpullEventData(info["events"][j]);
+	
       }
     });
-  return 0;
+  return 1;
 }
 
 function SGpullEventData(eventEntry) {
@@ -161,10 +196,10 @@ function getTicketMasterData() {
     .then((data) => {
       let TMEventData = data["_embedded"]["events"];
       for (let k=0;k<TMEventData.length; k++) {
-	buildEventTile(TMpullEventData(TMEventData[k]), "TicketMaster");
+	return TMpullEventData(TMEventData[k]);
       }
     });
-  return 0;
+  return 1;
 }
 
 function TMpullEventData(eventEntry) {
